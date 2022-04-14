@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+	    <title>Blog Site</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+   <div th:replace="/fragments/styling :: head-style" ></div>
+   <div th:replace="/fragments/styling :: body-links" ></div>
+COPY
+   <div th:replace="fragments/navbar :: navbar" ></div>
+COPY
+    </head>
+    <body>
+     <div class="container">
+        <h1>Welcome to Our Blog Post Site!</h1>
+        
+        <div class="row">
+		<div th:each="blog:${posts}">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h2 th:text="${blog.title}"></h2>
+				</div>
+				<div class="panel-body">
+					<strong><p th:text="${blog.author}"/></strong>
+					<p th:text="${blog.blogEntry}" />
+				</div>
+				<div class="panel-footer">
+					<!-- Link to Update -->
+					<!-- Link to Show  -->
+					<!--  Link to Destroy -->
+					Buttons
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+        <h3>Check out our blogs!</h3>
+        <div class="row">
+    <div th:each="blog:${posts}">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p th:text="${blog.title}"/>
+		</div>
+	    <div class="panel-body">
+		<p th:text="${blog.author}"/>
+		<p th:text="${blog.blogEntry}" />
+	    </div>
+	    <div class="panel-footer">
+		<!-- Link to Update -->
+		<!-- Link to Show  -->
+		<!--  Link to Destroy -->
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+        <p>Please use the form below to submit a Blog Post:</p>
+<form action="#" th:action="@{/}" th:object="${blogPost}" method="post">
+    <table>
+	<tr>
+            <td>Title</td>
+	    <td><input type="text" th:field="*{title}" /></td>
+	</tr>
+	<tr>
+	    <td>Author:</td>
+	    <td><input type="text" th:field="*{author}" /></td>
+	</tr>
+	<tr>
+    	    <td>Blog Entry:</td>
+	    <td><input type="text" th:field="*{blogEntry}" /></td>
+	</tr>
+	<tr>
+	    <td><button type="submit">Submit Your Post</button></td>
+	</tr>
+    </table>
+</form>
+<form action="#" th:action="@{'/blogposts/{id}'(id=${blog.id})}" th:method="delete"
+                      class="form-horizontal">
+        <div class="form-group">
+            <input type="hidden" name="_method" value="delete"/>
+        <button type="submit" class="btn btn-danger btn-block" th:text="Delete">Delete</button>
+    </div>
+    <div class="card-footer">
+	<a href="#" th:href="@{blogposts/{id}(id=${blog.id})}">
+		<button class="btn btn-light">Edit Post</button>
+	</a>
+	<a href="#" th:href="@{blogposts/delete/{id}(id=${blog.id})}">
+		<button class="btn btn-danger" type="submit">Delete Post</button>
+	</a>
+</div>
+</form>
+<script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+ </div>
+    </body>
+</html>
